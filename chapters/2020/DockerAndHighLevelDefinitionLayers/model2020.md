@@ -28,21 +28,62 @@ Nous somme quatre étudiants en dernière année d'architecture logicielle à Po
 
 ## I. Research context /Project
 
-Préciser ici votre contexte.
+Docker est un logiciel libre permettant de lancer des applications dans des conteneurs logiciels [[1]](https://fr.wikipedia.org/wiki/Docker_(logiciel)).  
+C'est un logiciel récent, sa première version open source datant de mars 2013.  
+En l'espace de quelques années, il s'est imposé comme un standard de l'industrie. Son succès provient de plusieurs aspects tels que : 
 
-Pourquoi c'est intéressant.
+* Une véritable alternative aux machines virtuelles traditionnelles dans le cadre d'un déploiement d'application
+* Une grande portabilité pour les applications, qui les rend agnostique du système d'exploitation de la machine hôte.
+* Des capacités de configuration pour l'utilisateur.
+* Une isolation des processus.
 
-![Figure 1: Logo UCA](../assets/model/UCAlogoQlarge.png){:height="50px" }
+
+Nous avons choisi de nous pencher sur l'étude de Docker pour plusieurs raisons : 
+
+D'une part, c'est une question qui nous parle. 
+Nous avons déjà réalisé des projets d'architecture logicielle où la question d'avoir une solution configurable est apparue, que cela soit pour séparer un environnement de développement et de production, ou pour livrer un produit qui soit adapté aux attentes d'un client.  
+
+D'autre part, c'est un sujet d'actualité. De plus en plus d'applications sont conteneurisées afin d'être déployée dans des solutions *cloud* ou des *clusters* d'orchestrateurs de conteneurs. Ces applications ont besoins d'être configurées à différents niveaux en fonction du type de paramètre. 
+
+
+![Figure 1: Logo UCA](../assets/model/UCAlogoQlarge.png)
 
 
 ## II. Observations/General question
 
-1. Commencez par formuler une question sur quelque chose que vous observez ou constatez ou encore une idée émergente. Attention pour répondre à cette question vous devrez être capable de quantifier vos réponses.
-2. Préciser bien pourquoi cette question est intéressante de votre point de vue et éventuellement en quoi la question est plus générale que le contexte de votre projet \(ex: Choisir une libraire de code est un problème récurrent qui se pose très différemment cependant en fonction des objectifs\)
+Dans ce projet nous nous focaliserons sur la question suivante :  
+**Comment les paramètres de haut niveau agissent sur des logiciels conteneurisés ?**
 
-Cette première étape nécessite beaucoup de réflexion pour se définir la bonne question afin de poser les bonnes bases pour la suit.
+C'est une question très vaste. 
+En analysant différents projets utilisant Docker, on se rend compte que les mêmes paramètres peuvent être définis à différents niveaux.  
+La même variable peut être définie au niveau d'un fichier `Dockerfile` [[2]](https://docs.docker.com/engine/reference/builder/), d'un fichier `docker-compose.yml` [[3]](https://docs.docker.com/compose/) ou dans une des fichiers de configuration spécifique au langage ou *framework* utilisé par l'application.  
+On est alors amené à se demander : À quels niveaux peut-on définir théoriquement chaque paramètre et plus concrètement, à quels niveaux sont-ils réellement définis ?  
+
+Cette question reste encore très vaste, on ne peut pas analyser tous les paramètres qui existent.  
+Pour réaliser notre étude, nous avons ainsi décidé de nous focaliser sur des paramètres fréquemment utilisés dans des applications. Ces paramètres sont :
+
+* URL de base de données
+*  ...
+
+Nous avons aussi décidé de restreindre notre analyse aux projets utilisant Docker et le *framework* Spring [[4]](https://spring.io).  
+Nous avons choisi ce *framework* au vu de nos connaissance préalables et du fait que l'ensemble de la configuration se fait dans un fichier `application.properties`.  
+Ce fichier unique permet une automatisation de nos analyses.
 
 ## III. information gathering
+
+Nous avons dans un premier temps effectué des recherches afin de savoir où et comment les différents paramètres qui nous intéressent peuvent être définis. 
+
+L'objectif de l'étude étant de comparer ces postulats avec les informations recueillies suite à l'analyse d'un ensemble de dépôts Git, nous avons tout d'abord sélectionné un échantillon de projets sur GitHub afin de réaliser nos premières analyses.  
+Ces projets devaient contenir à la fois le tag 'Docker' et le tag 'Spring' afin d'être sélectionnés et ont été retenus de par leur nombre important d'étoiles Docker (signe de popularité).  
+Une étape de pre-processing était ensuite effectué afin de s'assurer que les projets retenus comportaient bien au moins un `Dockerfile` ou un `docker-compose.yml` et un fichier de configuration Spring.  
+Tout ce processus de selection du dataset a été automatisé grâce à un script Python utilisant les *packages* PyGitHub pour la sélection des dépôts et PyGit2 pour leur clonage.
+
+Une fois le dataset constitué, une phase d'analyse pour chacun des projets à lieu.  
+Dans un premier temps, il faut déterminer si un paramètre a été utilisé, et si c'est le cas à quel niveau ce dernier a été défini. 
+
+parler exactement de comment on fait avec mots associés à un tag, dire les limites : qu'on peut avoir oublier / mal defini des params, qu'il aurait été intéressant pour aller plus loin de faire de l'analyse dynamque en linkant le code aux paramètres mais ce que c'est beaucoups plus compliqué à faire. 
+
+ARTICLES @laurent
 
 Préciser vos zones de recherches en fonction de votre projet,
 
@@ -51,20 +92,37 @@ Préciser vos zones de recherches en fonction de votre projet,
  
 ## IV. Hypothesis & Experiences
 
+Nous partions de l'hypothèse que certains paramètres étaient plus utilisés à certains niveaux (mettre tableau de nos hypothèse ...).  L'object était ainsi de voir si nos hypothèses étaient correct ou pas.
+Nous avons obtenues les résultats suivants : 
+
 1. Il s'agit ici d'énoncer sous forme d' hypothèses ce que vous allez chercher à démontrer. Vous devez définir vos hypothèses de façon à pouvoir les _mesurer facilement._ Bien sûr, votre hypothèse devrait être construite de manière à v_ous aider à répondre à votre question initiale_.Explicitez ces différents points.
-2. Test de l’hypothèse par l’expérimentation. 1. Vos tests d’expérimentations permettent de vérifier si vos hypothèses sont vraies ou fausses. 2. Il est possible que vous deviez répéter vos expérimentations pour vous assurer que les premiers résultats ne sont pas seulement un accident.
+2. Test de l'hypothèse par l'expérimentation. 1. Vos tests d'expérimentations permettent de vérifier si vos hypothèses sont vraies ou fausses. 2. Il est possible que vous deviez répéter vos expérimentations pour vous assurer que les premiers résultats ne sont pas seulement un accident.
 3. Explicitez bien les outils utilisés et comment.
 4. Justifiez vos choix
 
 ## V. Result Analysis and Conclusion
 
-1. Analyse des résultats & construction d’une conclusion : Une fois votre expérience terminée, vous récupérez vos mesures et vous les analysez pour voir si votre hypothèse tient la route. 
+1. Analyse des résultats & construction d'une conclusion : Une fois votre expérience terminée, vous récupérez vos mesures et vous les analysez pour voir si votre hypothèse tient la route. 
 
-## VI. Tools \(facultatif\)
+## VI. Tools
+Ce projet utilise plusieurs scripts Python afin de mener à bien ses analyses :
 
-Précisez votre utilisation des outils ou les développements \(e.g. scripts\) réalisés pour atteindre vos objectifs. Ce chapitre doit viser à \(1\) pouvoir reproduire vos expériementations, \(2\) partager/expliquer à d'autres l'usage des outils.
+- crawler : permet de sélectionner et cloner les dépôts GitHub d'intérêt, c'est-à-dire ayant les tags 'Docker' et 'Spring'. Ils sont clonés par ordre décroissant d'étoiles.
+
+	```
+	export TOKEN=github token
+	python3 crawler.py
+	```
+- analyzer : permet de parcourir l'ensemble des dépôts clonés et d'en extraire les données souhaitées, à savoir la quantité et le type de paramètres trouvés en fonction du niveau de définition. Génère un fichier au format xlsx (Excel) avec ces données.
+
+	```
+	python3 analyzer.py
+	```
+- graphs et filereader : permettent de générer des graphes à partir des données du fichier xlsx généré par analyzer.
+	```
+	python3 filereader.py data.xlsx
+	```
+
 
 ## VI. References
-
-1. ref1
-1. ref2
+@laurent
