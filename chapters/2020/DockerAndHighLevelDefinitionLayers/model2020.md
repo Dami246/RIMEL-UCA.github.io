@@ -27,7 +27,7 @@ Nous somme quatre étudiants en dernière année d'architecture logicielle à Po
 * MENARD Noé &lt;noe.menard@etu.univ-cotedazur.fr&gt;
 * SALORD Florian &lt;florian.salord@etu.univ-cotedazur.fr&gt;
 
-## I. Project /Contexte de recherche
+## I. Projet / contexte de recherche
 
 Docker est un logiciel libre permettant de lancer des applications dans des conteneurs logiciels [[1]](https://fr.wikipedia.org/wiki/Docker_(logiciel)).  
 C'est un logiciel récent, sa première version open source datant de mars 2013.  
@@ -50,7 +50,7 @@ D'autre part, c'est un sujet d'actualité. De plus en plus d'applications sont c
 ![Figure 1: Logo UCA](../assets/model/UCAlogoQlarge.png){:height="50px" }
 
 
-## II. Observations/Questions générales
+## II. Observations / questions générales
 
 Dans ce projet nous nous focaliserons sur la question suivante :  
 **Comment les paramètres de haut niveau agissent sur des logiciels conteneurisés ?**
@@ -93,7 +93,7 @@ Préciser vos zones de recherches en fonction de votre projet,
 1. les articles ou documents utiles à votre projet
 2. les outils
  
-## IV. Hypothèses et Expériences
+## IV. Hypothèses et expériences
 
 Nous partions de l'hypothèse que certains paramètres étaient plus utilisés à certains niveaux (mettre tableau de nos hypothèse ...).  L'object était ainsi de voir si nos hypothèses étaient correct ou pas.
 Nous avons obtenues les résultats suivants : 
@@ -103,7 +103,7 @@ Nous avons obtenues les résultats suivants :
 3. Explicitez bien les outils utilisés et comment.
 4. Justifiez vos choix
 
-## V. Analyses des résultats et Conclusion
+## V. Analyse des résultats et conclusion
 
 1. Analyse des résultats & construction d'une conclusion : Une fois votre expérience terminée, vous récupérez vos mesures et vous les analysez pour voir si votre hypothèse tient la route. 
 
