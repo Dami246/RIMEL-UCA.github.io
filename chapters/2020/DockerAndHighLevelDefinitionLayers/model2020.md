@@ -164,5 +164,5 @@ Ce projet utilise plusieurs scripts Python afin de mener à bien ses analyses :
 	```
 
 
-## VI. References
+## VI. Références
 @laurent
