@@ -18,7 +18,7 @@ date:   2020-01-03 22:00:00 +0100
 **_janvier 2020_**
 
 
-## Authors
+## Auteurs
 
 Nous somme quatre étudiants en dernière année d'architecture logicielle à Polytech Nice-Sophia : 
 
@@ -27,7 +27,7 @@ Nous somme quatre étudiants en dernière année d'architecture logicielle à Po
 * MENARD Noé &lt;noe.menard@etu.univ-cotedazur.fr&gt;
 * SALORD Florian &lt;florian.salord@etu.univ-cotedazur.fr&gt;
 
-## I. Research context /Project
+## I. Project /Contexte de recherche
 
 Docker est un logiciel libre permettant de lancer des applications dans des conteneurs logiciels [[1]](https://fr.wikipedia.org/wiki/Docker_(logiciel)).  
 C'est un logiciel récent, sa première version open source datant de mars 2013.  
@@ -50,7 +50,7 @@ D'autre part, c'est un sujet d'actualité. De plus en plus d'applications sont c
 ![Figure 1: Logo UCA](../assets/model/UCAlogoQlarge.png){:height="50px" }
 
 
-## II. Observations/General question
+## II. Observations/Questions générales
 
 Dans ce projet nous nous focaliserons sur la question suivante :  
 **Comment les paramètres de haut niveau agissent sur des logiciels conteneurisés ?**
@@ -72,7 +72,7 @@ Nous avons aussi décidé de restreindre notre analyse aux projets utilisant Doc
 Nous avons choisi ce *framework* au vu de nos connaissance préalables et du fait que l'ensemble de la configuration se fait dans un fichier `application.properties`.  
 Ce fichier unique permet une automatisation de nos analyses.
 
-## III. information gathering
+## III. Regroupement d'informations
 
 Nous avons dans un premier temps effectué des recherches afin de savoir où et comment les différents paramètres qui nous intéressent peuvent être définis. 
 
@@ -93,7 +93,7 @@ Préciser vos zones de recherches en fonction de votre projet,
 1. les articles ou documents utiles à votre projet
 2. les outils
  
-## IV. Hypothesis & Experiences
+## IV. Hypothèses et Expériences
 
 Nous partions de l'hypothèse que certains paramètres étaient plus utilisés à certains niveaux (mettre tableau de nos hypothèse ...).  L'object était ainsi de voir si nos hypothèses étaient correct ou pas.
 Nous avons obtenues les résultats suivants : 
@@ -103,7 +103,7 @@ Nous avons obtenues les résultats suivants :
 3. Explicitez bien les outils utilisés et comment.
 4. Justifiez vos choix
 
-## V. Result Analysis and Conclusion
+## V. Analyses des résultats et Conclusion
 
 1. Analyse des résultats & construction d'une conclusion : Une fois votre expérience terminée, vous récupérez vos mesures et vous les analysez pour voir si votre hypothèse tient la route. 
 
@@ -144,7 +144,7 @@ En majorité présents dans le Dockerfile, qui permet de définir du comportemen
 Enfin l'utilisation des variables d'environnement au niveau de Spring peut être du à une prévalence de l'utilisation des profils Maven, souvent associé aux projets Spring.
 
 
-## VI. Tools
+## VI. Outils
 Ce projet utilise plusieurs scripts Python afin de mener à bien ses analyses :
 
 - crawler : permet de sélectionner et cloner les dépôts GitHub d'intérêt, c'est-à-dire ayant les tags 'Docker' et 'Spring'. Ils sont clonés par ordre décroissant d'étoiles.
