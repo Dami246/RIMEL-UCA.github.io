@@ -17,6 +17,7 @@ date:   2020-01-03 22:00:00 +0100
 
 **_janvier 2020_**
 
+
 ## Authors
 
 Nous somme quatre étudiants en dernière année d'architecture logicielle à Polytech Nice-Sophia : 
@@ -46,7 +47,7 @@ Nous avons déjà réalisé des projets d'architecture logicielle où la questio
 D'autre part, c'est un sujet d'actualité. De plus en plus d'applications sont conteneurisées afin d'être déployée dans des solutions *cloud* ou des *clusters* d'orchestrateurs de conteneurs. Ces applications ont besoins d'être configurées à différents niveaux en fonction du type de paramètre. 
 
 
-![Figure 1: Logo UCA](../assets/model/UCAlogoQlarge.png)
+![Figure 1: Logo UCA](../assets/model/UCAlogoQlarge.png){:height="50px" }
 
 
 ## II. Observations/General question
@@ -60,10 +61,12 @@ La même variable peut être définie au niveau d'un fichier `Dockerfile` [[2]](
 On est alors amené à se demander : À quels niveaux peut-on définir théoriquement chaque paramètre et plus concrètement, à quels niveaux sont-ils réellement définis ?  
 
 Cette question reste encore très vaste, on ne peut pas analyser tous les paramètres qui existent.  
-Pour réaliser notre étude, nous avons ainsi décidé de nous focaliser sur des paramètres fréquemment utilisés dans des applications. Ces paramètres sont :
+Pour réaliser notre étude, nous avons ainsi décidé de nous focaliser sur des paramètres fréquemment utilisés dans des applications.  
 
-* URL de base de données
-*  ...
+* Les URLs de base de données
+* La gestion des versions
+* Le port exposé par un serveur
+* Les environnements (production, développement, test)
 
 Nous avons aussi décidé de restreindre notre analyse aux projets utilisant Docker et le *framework* Spring [[4]](https://spring.io).  
 Nous avons choisi ce *framework* au vu de nos connaissance préalables et du fait que l'ensemble de la configuration se fait dans un fichier `application.properties`.  
@@ -103,6 +106,41 @@ Nous avons obtenues les résultats suivants :
 ## V. Result Analysis and Conclusion
 
 1. Analyse des résultats & construction d'une conclusion : Une fois votre expérience terminée, vous récupérez vos mesures et vous les analysez pour voir si votre hypothèse tient la route. 
+
+
+Après analyse de 72 dépôts GitHub ayant pour `topic` Docker et Spring, nous avons obtenu les résultats suivants :
+
+<center>
+![Percentage results](../assets/DockerAndHighLevelDefinitionLayers/docker_and_high_level_definition_layers_1.png)
+
+*Figure 1 : Parameter presence according to file repartition in percentage*
+
+![Absolute results](../assets/DockerAndHighLevelDefinitionLayers/docker_and_high_level_definition_layers_2.png)
+*Figure 2 : Parameter presence according to file repartition in values*
+
+</center>
+
+On observe pour chacun des paramètres une répartition bien différentes au niveau de leur localisation.  
+
+### Connexion à une base de données
+
+Pour la connexion à une base de données, la présence de l'url majoritairement dans le `docker-compose` correspond aux hypothèses que nous avions posé vis-à-vis du fait que les URLs de ressources soient principalement dans les niveaux les plus élevés, à savoir à l'exécution des conteneurs Docker. On constate néanmoins une forte prévalence de ces paramètres dans les fichiers de configuration Spring, ce qui peut être du à la simplicité d'utiliser différents fichiers de configuration en fonction de l'environnement utilisé.
+
+### Version
+Les versions sont en grande majorité déclarées dans les fichiers `docker-compose`. Ce résultat peut être du à une erreur dans les mots clés choisis pour représenter les versions.  
+APPROFONDIR
+
+### Port
+
+Les résultats sur les ports nous paraissent étonnant. En effet il fréquent dans notre usage de Compose d'exposer les ports des serveurs via le mot-clé `ports`, qui n'a ici retrouvé dans aucun des projets analysés.  
+On constate une prévalence de déclaration de port au niveau du `Dockerfile` plutôt que dans les configurations Spring.  
+Une explication possible de ce déséquilibre peut venir de l'utilisation du port par défaut des projets Spring, qui peut suffire dans le cas dans serveur conteneurisé.
+
+### Environnement
+
+Avec les connexions aux bases de données, la gestion d'environnements est la seule à être présente sur tous les niveaux de déclaration possibles.  
+En majorité présents dans le Dockerfile, qui permet de définir du comportement de manière statique, il permet notamment d'avoir de multiples images avec des configurations différentes prêtes à l'emploi. Leur utilisation dans les `docker-compose` est assez proche, ce qui permet de n'avoir qu'une seule image du projet et de pouvoir changer d'environnement *on the fly*. Cette utilisation nécessite cependant d'embarquer l'intégralité des dépendances des différentes configurations
+
 
 ## VI. Tools
 Ce projet utilise plusieurs scripts Python afin de mener à bien ses analyses :
