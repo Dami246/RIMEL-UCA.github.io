@@ -111,6 +111,7 @@ Nous avons obtenues les résultats suivants :
 Après analyse de 72 dépôts GitHub ayant pour `topic` Docker et Spring, nous avons obtenu les résultats suivants :
 
 <center>
+
 ![Percentage results](../assets/DockerAndHighLevelDefinitionLayers/docker_and_high_level_definition_layers_1.png)
 
 *Figure 1 : Parameter presence according to file repartition in percentage*
