@@ -22,7 +22,7 @@ date:   2020-01-03 22:00:00 +0100
 
 Nous somme quatre étudiants en dernière année d'architecture logicielle à Polytech Nice-Sophia : 
 
-* BENAZET-LACARRE Laurent-Jérôme&lt;laurent-jerome.benazet-lacarre@etu.univ-cotedazur.fr&gt;
+* BENAZET-LACARRE Laurent-Jérôme &lt;laurent-jerome.benazet-lacarre@etu.univ-cotedazur.fr&gt;
 * FRERE Baptiste &lt;baptiste.frere@etu.univ-cotedazur.fr&gt;
 * MENARD Noé &lt;noe.menard@etu.univ-cotedazur.fr&gt;
 * SALORD Florian &lt;florian.salord@etu.univ-cotedazur.fr&gt;
@@ -34,7 +34,7 @@ C'est un logiciel récent, sa première version open source datant de mars 2013.
 En l'espace de quelques années, il s'est imposé comme un standard de l'industrie. Son succès provient de plusieurs aspects tels que : 
 
 * Une véritable alternative aux machines virtuelles traditionnelles dans le cadre d'un déploiement d'application
-* Une grande portabilité pour les applications, qui les rend agnostique du système d'exploitation de la machine hôte.
+* Une grande portabilité pour les applications, qui les rend agnostiques du système d'exploitation de la machine hôte.
 * Des capacités de configuration pour l'utilisateur.
 * Une isolation des processus.
 
@@ -44,7 +44,7 @@ Nous avons choisi de nous pencher sur l'étude de Docker pour plusieurs raisons 
 D'une part, c'est une question qui nous parle. 
 Nous avons déjà réalisé des projets d'architecture logicielle où la question d'avoir une solution configurable est apparue, que cela soit pour séparer un environnement de développement et de production, ou pour livrer un produit qui soit adapté aux attentes d'un client.  
 
-D'autre part, c'est un sujet d'actualité. De plus en plus d'applications sont conteneurisées afin d'être déployée dans des solutions *cloud* ou des *clusters* d'orchestrateurs de conteneurs. Ces applications ont besoins d'être configurées à différents niveaux en fonction du type de paramètre. 
+D'autre part, c'est un sujet d'actualité. De plus en plus d'applications sont conteneurisées afin d'être déployées dans des solutions *cloud* ou des *clusters* d'orchestrateurs de conteneurs. Ces applications ont besoin d'être configurées à différents niveaux en fonction du type de paramètre. 
 
 
 ![Figure 1: Logo UCA](../assets/model/UCAlogoQlarge.png){:height="50px" }
@@ -57,7 +57,7 @@ Dans ce projet nous nous focaliserons sur la question suivante :
 
 C'est une question très vaste. 
 En analysant différents projets utilisant Docker, on se rend compte que les mêmes paramètres peuvent être définis à différents niveaux.  
-La même variable peut être définie au niveau d'un fichier `Dockerfile` [[2]](https://docs.docker.com/engine/reference/builder/), d'un fichier `docker-compose.yml` [[3]](https://docs.docker.com/compose/) ou dans une des fichiers de configuration spécifique au langage ou *framework* utilisé par l'application.  
+La même variable peut être définie au niveau d'un fichier `Dockerfile` [[2]](https://docs.docker.com/engine/reference/builder/), d'un fichier `docker-compose.yml` [[3]](https://docs.docker.com/compose/) ou dans des fichiers de configuration spécifiques au langage ou *framework* utilisé par l'application.  
 On est alors amené à se demander : À quels niveaux peut-on définir théoriquement chaque paramètre et plus concrètement, à quels niveaux sont-ils réellement définis ?  
 
 Cette question reste encore très vaste, on ne peut pas analyser tous les paramètres qui existent.  
@@ -81,12 +81,16 @@ Ces projets devaient contenir à la fois le tag 'Docker' et le tag 'Spring' afin
 Une étape de pre-processing était ensuite effectuée afin de s'assurer que les projets retenus comportaient bien au moins un `Dockerfile` ou un `docker-compose.yml` et un fichier de configuration Spring.  
 Tout ce processus de selection du dataset a été automatisé grâce à un script Python utilisant les *packages* PyGitHub pour la sélection des dépôts et PyGit2 pour leur clonage.
 
-Une fois le dataset constitué, une phase d'analyse pour chacun des projets à lieu.  
+Une fois le dataset constitué, une phase d'analyse pour chacun des projets a lieu.  
 Dans un premier temps, il faut déterminer si un paramètre a été utilisé, et si c'est le cas à quel niveau ce dernier a été défini. 
 
 parler exactement de comment on fait avec mots associés à un tag, dire les limites : qu'on peut avoir oublier / mal defini des params, qu'il aurait été intéressant pour aller plus loin de faire de l'analyse dynamque en linkant le code aux paramètres mais ce que c'est beaucoups plus compliqué à faire. 
 
-ARTICLES @laurent
+
+Lors de nos recherches, nous nous sommes inspirés de certains articles, que ce soit au niveau des résultats obtenus ou de la démarche mise en place :  
+[To Docker or Not to Docker: A Security Perspective](https://www.researchgate.net/publication/309965523_To_Docker_or_Not_to_Docker_A_Security_Perspective?fbclid=IwAR0F04G9mmHWX3eeWzSZFDO4wOl54dcY7sBE3GlGz0yHIjSvXh-FC94vTBA)  
+[The Impact of Continuous Integration on Other Software Development Practices: A Large-Scale Empirical Study](https://web.cs.ucdavis.edu/~filkov/papers/CI_adoption.pdf)
+
 
 Préciser vos zones de recherches en fonction de votre projet,
 
@@ -95,8 +99,8 @@ Préciser vos zones de recherches en fonction de votre projet,
  
 ## IV. Hypothèses et expériences
 
-Nous partions de l'hypothèse que certains paramètres étaient plus utilisés à certains niveaux (mettre tableau de nos hypothèse ...).  L'object était ainsi de voir si nos hypothèses étaient correct ou pas.
-Nous avons obtenues les résultats suivants : 
+Nous partions de l'hypothèse que certains paramètres étaient plus utilisés à certains niveaux (mettre tableau de nos hypothèse ...).  L'object était ainsi de voir si nos hypothèses étaient correctes ou pas.
+Nous avons obtenu les résultats suivants : 
 
 1. Il s'agit ici d'énoncer sous forme d' hypothèses ce que vous allez chercher à démontrer. Vous devez définir vos hypothèses de façon à pouvoir les _mesurer facilement._ Bien sûr, votre hypothèse devrait être construite de manière à v_ous aider à répondre à votre question initiale_.Explicitez ces différents points.
 2. Test de l'hypothèse par l'expérimentation. 1. Vos tests d'expérimentations permettent de vérifier si vos hypothèses sont vraies ou fausses. 2. Il est possible que vous deviez répéter vos expérimentations pour vous assurer que les premiers résultats ne sont pas seulement un accident.
@@ -121,27 +125,27 @@ Après analyse de 72 dépôts GitHub ayant pour `topic` Docker et Spring, nous a
 
 </center>
 
-On observe pour chacun des paramètres une répartition bien différentes au niveau de leur localisation.  
+On observe pour chacun des paramètres une répartition bien différente au niveau de leur localisation.  
 
 ### Connexion à une base de données
 
-Pour la connexion à une base de données, la présence de l'url majoritairement dans le `docker-compose` correspond aux hypothèses que nous avions posé vis-à-vis du fait que les URLs de ressources soient principalement dans les niveaux les plus élevés, à savoir à l'exécution des conteneurs Docker. On constate néanmoins une forte prévalence de ces paramètres dans les fichiers de configuration Spring, ce qui peut être du à la simplicité d'utiliser différents fichiers de configuration en fonction de l'environnement utilisé.
+Pour la connexion à une base de données, la présence de l'url majoritairement dans le `docker-compose` correspond aux hypothèses que nous avions posé vis-à-vis du fait que les URLs de ressources soient principalement dans les niveaux les plus élevés, à savoir à l'exécution des conteneurs Docker. On constate néanmoins une forte prévalence de ces paramètres dans les fichiers de configuration Spring, ce qui peut être dû à la simplicité d'utiliser différents fichiers de configuration en fonction de l'environnement utilisé.
 
 ### Version
-Les versions sont en grande majorité déclarées dans les fichiers `docker-compose`. Ce résultat peut être du à une erreur dans les mots clés choisis pour représenter les versions.  
+Les versions sont en grande majorité déclarées dans les fichiers `docker-compose`. Ce résultat peut être dû à une erreur dans les mots clés choisis pour représenter les versions.  
 APPROFONDIR
 
 ### Port
 
-Les résultats sur les ports nous paraissent étonnant. En effet il fréquent dans notre usage de Compose d'exposer les ports des serveurs via le mot-clé `ports`, qui n'a ici retrouvé dans aucun des projets analysés.  
+Les résultats sur les ports nous paraissent étonnant. En effet il est fréquent dans notre usage de Compose d'exposer les ports des serveurs via le mot-clé `ports`, qui n'a ici été retrouvé dans aucun des projets analysés.  
 On constate une prévalence de déclaration de port au niveau du `Dockerfile` plutôt que dans les configurations Spring.  
-Une explication possible de ce déséquilibre peut venir de l'utilisation du port par défaut des projets Spring, qui peut suffire dans le cas dans serveur conteneurisé.
+Une explication possible de ce déséquilibre peut venir de l'utilisation du port par défaut des projets Spring, qui peut suffire dans le cas de serveur conteneurisé.
 
 ### Environnement
 
 Avec les connexions aux bases de données, la gestion d'environnements est la seule à être présente sur tous les niveaux de déclaration possibles.  
-En majorité présents dans le Dockerfile, qui permet de définir du comportement de manière statique, il permet notamment d'avoir de multiples images avec des configurations différentes prêtes à l'emploi. Leur utilisation dans les `docker-compose` est assez proche, ce qui permet de n'avoir qu'une seule image du projet et de pouvoir changer d'environnement *on the fly*. Cette utilisation nécessite cependant d'embarquer l'intégralité des dépendances des différentes configurations dans l'image Docker.  
-Enfin l'utilisation des variables d'environnement au niveau de Spring peut être du à une prévalence de l'utilisation des profils Maven, souvent associé aux projets Spring.
+En majorité présent dans le Dockerfile, qui permet de définir du comportement de manière statique, il permet notamment d'avoir de multiples images avec des configurations différentes prêtes à l'emploi. Leur utilisation dans les `docker-compose` est assez proche, ce qui permet de n'avoir qu'une seule image du projet et de pouvoir changer d'environnement *on the fly*. Cette utilisation nécessite cependant d'embarquer l'intégralité des dépendances des différentes configurations dans l'image Docker.  
+Enfin l'utilisation des variables d'environnement au niveau de Spring peut être dûe à une prévalence de l'utilisation des profils Maven, souvent associés aux projets Spring.
 
 
 ## VI. Outils
@@ -165,4 +169,6 @@ Ce projet utilise plusieurs scripts Python afin de mener à bien ses analyses :
 
 
 ## VI. Références
-@laurent
+[Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/?fbclid=IwAR0OWIdF30kuCeuWTzn2-hm7_EVjeD37ftcbZ1uqwT-Uno83apMN37OeXhI)  
+[Compose file version 3 reference](https://docs.docker.com/compose/compose-file/?fbclid=IwAR3r4LMfRqDAXEekEBNNb8aE93gzDhGVclxAJaduKYIHI9--zSEbrwUiQBI)  
+[Spring official documentation](https://spring.io/docs)
