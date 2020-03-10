@@ -63,10 +63,10 @@ On est alors amené à se demander : À quels niveaux peut-on définir théoriqu
 Cette question reste encore très vaste, on ne peut pas analyser tous les paramètres qui existent.  
 Pour réaliser notre étude, nous avons ainsi décidé de nous focaliser sur des paramètres fréquemment utilisés dans des applications.  
 
-* Les URLs de base de données
-* La gestion des versions
-* Le port exposé par un serveur
-* Les environnements (production, développement, test)
+* Les URLs de base de données.
+* La gestion des versions.
+* Le port exposé par un serveur.
+* Les environnements (production, développement, test).
 
 Nous avons aussi décidé de restreindre notre analyse aux projets utilisant Docker et le *framework* Spring [[4]](https://spring.io).  
 Nous avons choisi ce *framework* au vu de nos connaissance préalables et du fait que l'ensemble de la configuration se fait dans un fichier `application.properties`.  
@@ -91,26 +91,28 @@ Lors de nos recherches, nous nous sommes inspirés de certains articles, que ce 
 [To Docker or Not to Docker: A Security Perspective](https://www.researchgate.net/publication/309965523_To_Docker_or_Not_to_Docker_A_Security_Perspective?fbclid=IwAR0F04G9mmHWX3eeWzSZFDO4wOl54dcY7sBE3GlGz0yHIjSvXh-FC94vTBA)  
 [The Impact of Continuous Integration on Other Software Development Practices: A Large-Scale Empirical Study](https://web.cs.ucdavis.edu/~filkov/papers/CI_adoption.pdf)
 
-
-Préciser vos zones de recherches en fonction de votre projet,
-
-1. les articles ou documents utiles à votre projet
-2. les outils
  
 ## IV. Hypothèses et expériences
+
+Nous sommes partis de l'hypothèse que certains paramètres de haut niveau sont définis dans différentes couches d'une application déployé sur Docker. Ces couches étant le code ou *framework* utilisé et les fichiers `Dockerfile` et `docker-compose.yml`, qui correspondent respectivement à la construction de l'image Docker, et à son exécution.  
+L'objectif de l'étude est de comparer nos hypothèses sur les niveaux de définitions des différents paramètres et ce qui est réellement utilisé dans un ensemble de projets tirés depuis GitHub.
+
+Nous avons ainsi fait les hypothèses suivantes : 
+
+- Code / *framework* : versions (du projet, des dépendances), port par défaut pour un serveur.
+- Dockerfile : type d’environnement (production, développement, test), version des dépendances.
+- URL de ressources, port pour un serveur.
+
+Ces choix ont été faits suite à une étude sur quelques dépôts populaires sur les thèmes de Spring et Docker qui ont montré une utilisation conséquente de ces paramètres. Ils ont été appuyé par notre propre expérience dans l'utilisation de Docker et Spring.
+
+Il n'est pas possible d'analyser l'ensemble des paramètres existants aussi nous avons décidé de nous focaliser sur ceux-ci pour l'analyse des résultats.
 
 Nous partions de l'hypothèse que certains paramètres étaient plus utilisés à certains niveaux (mettre tableau de nos hypothèse ...).  L'object était ainsi de voir si nos hypothèses étaient correctes ou pas.
 Nous avons obtenu les résultats suivants : 
 
-1. Il s'agit ici d'énoncer sous forme d' hypothèses ce que vous allez chercher à démontrer. Vous devez définir vos hypothèses de façon à pouvoir les _mesurer facilement._ Bien sûr, votre hypothèse devrait être construite de manière à v_ous aider à répondre à votre question initiale_.Explicitez ces différents points.
-2. Test de l'hypothèse par l'expérimentation. 1. Vos tests d'expérimentations permettent de vérifier si vos hypothèses sont vraies ou fausses. 2. Il est possible que vous deviez répéter vos expérimentations pour vous assurer que les premiers résultats ne sont pas seulement un accident.
-3. Explicitez bien les outils utilisés et comment.
-4. Justifiez vos choix
+
 
 ## V. Analyse des résultats et conclusion
-
-1. Analyse des résultats & construction d'une conclusion : Une fois votre expérience terminée, vous récupérez vos mesures et vous les analysez pour voir si votre hypothèse tient la route. 
-
 
 Après analyse de 72 dépôts GitHub ayant pour `topic` Docker et Spring, nous avons obtenu les résultats suivants :
 
@@ -129,23 +131,25 @@ On observe pour chacun des paramètres une répartition bien différente au nive
 
 ### Connexion à une base de données
 
-Pour la connexion à une base de données, la présence de l'url majoritairement dans le `docker-compose` correspond aux hypothèses que nous avions posé vis-à-vis du fait que les URLs de ressources soient principalement dans les niveaux les plus élevés, à savoir à l'exécution des conteneurs Docker. On constate néanmoins une forte prévalence de ces paramètres dans les fichiers de configuration Spring, ce qui peut être dû à la simplicité d'utiliser différents fichiers de configuration en fonction de l'environnement utilisé.
+Pour la connexion à une base de données, la présence de l'url majoritairement dans le `docker-compose` correspond aux hypothèses que nous avions posé vis-à-vis du fait que les URLs de ressources soient principalement dans les niveaux les plus élevés, à savoir à l'exécution des conteneurs Docker. 
+On constate néanmoins un résultat qui n'était pas attendu : une forte prévalence de ces paramètres est présente dans les fichiers de configuration Spring. Ce fait peut être dû à la simplicité d'utiliser différents fichiers de configuration en fonction de l'environnement utilisé.
 
 ### Version
-Les versions sont en grande majorité déclarées dans les fichiers `docker-compose`. Ce résultat peut être dû à une erreur dans les mots clés choisis pour représenter les versions.  
-APPROFONDIR
+Les versions sont en grande majorité déclarées dans les fichiers `docker-compose.yml`. Ce résultat peut être dû à une erreur dans les mots clés choisis pour représenter les versions, mais ne va à l'encontre de nos hypothèses qui étaient l'utilisation des versions dans le code / *framework*, et le fichier `docker-compose.yml`.
+
 
 ### Port
 
-Les résultats sur les ports nous paraissent étonnant. En effet il est fréquent dans notre usage de Compose d'exposer les ports des serveurs via le mot-clé `ports`, qui n'a ici été retrouvé dans aucun des projets analysés.  
+Les résultats sur les ports nous paraissent étonnant. En effet il est fréquent dans notre usage de Compose d'exposer les ports des serveurs via le mot-clé `ports`, qui n'a ici été retrouvé dans aucun des projets analysés.   
 On constate une prévalence de déclaration de port au niveau du `Dockerfile` plutôt que dans les configurations Spring.  
 Une explication possible de ce déséquilibre peut venir de l'utilisation du port par défaut des projets Spring, qui peut suffire dans le cas de serveur conteneurisé.
 
 ### Environnement
 
 Avec les connexions aux bases de données, la gestion d'environnements est la seule à être présente sur tous les niveaux de déclaration possibles.  
-En majorité présent dans le Dockerfile, qui permet de définir du comportement de manière statique, il permet notamment d'avoir de multiples images avec des configurations différentes prêtes à l'emploi. Leur utilisation dans les `docker-compose` est assez proche, ce qui permet de n'avoir qu'une seule image du projet et de pouvoir changer d'environnement *on the fly*. Cette utilisation nécessite cependant d'embarquer l'intégralité des dépendances des différentes configurations dans l'image Docker.  
-Enfin l'utilisation des variables d'environnement au niveau de Spring peut être dûe à une prévalence de l'utilisation des profils Maven, souvent associés aux projets Spring.
+En majorité présent dans le Dockerfile, qui permet de définir du comportement de manière statique, il permet notamment d'avoir de multiples images avec des configurations différentes prêtes à l'emploi.  
+Leur utilisation dans les `docker-compose` est assez proche, ce qui permet de n'avoir qu'une seule image du projet et de pouvoir changer d'environnement *on the fly*. Cette utilisation nécessite cependant d'embarquer l'intégralité des dépendances des différentes configurations dans l'image Docker. Ce dernier point est la raison pour laquelle nous n'attendions pas de déclaration d'environnement dans les fichiers `docker-compose.yml`.   
+Enfin l'utilisation des variables d'environnement au niveau de Spring peut être due à une prévalence de l'utilisation des profils Maven, souvent associés aux projets Spring, d'où sa faible représentation ici.
 
 
 ## VI. Outils
@@ -164,7 +168,7 @@ Ce projet utilise plusieurs scripts Python afin de mener à bien ses analyses :
 	```
 - graphs et filereader : permettent de générer des graphes à partir des données du fichier xlsx généré par analyzer.
 	```
-	python3 filereader.py data.xlsx
+	python3 fileReader.py data.xlsx
 	```
 
 
